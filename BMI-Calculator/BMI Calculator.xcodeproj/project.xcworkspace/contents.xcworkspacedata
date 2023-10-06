@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:BMI-Calculator-LayoutPractice.xcodeproj">
+      location = "self:BMI Calculator.xcodeproj">
    </FileRef>
 </Workspace>

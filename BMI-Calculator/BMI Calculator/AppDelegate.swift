@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  BMI-Calculator-LayoutPractice
+//  BMI Calculator
 //
 //  Created by Angela Yu on 21/08/2019.
-//  Copyright © 2019 App Brewery. All rights reserved.
+//  Copyright © 2019 Angela Yu. All rights reserved.
 //
 
 import UIKit
