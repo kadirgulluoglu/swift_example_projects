@@ -8,11 +8,7 @@ class CalculatorViewController: UIViewController {
     @IBOutlet weak var zeroPctButton: UIButton!
     @IBOutlet weak var billTextField: UITextField!
     
-    
-    var tip = 0.10
-    var numberOfPeople = 2
-    var billTotal = 0.0
-    var finalResult = "0.0"
+    var calculateBrain = CalculateBrain()
     
     @IBAction func tipChanged(_ sender: UIButton) {
         billTextField.endEditing(true)
@@ -22,11 +18,7 @@ class CalculatorViewController: UIViewController {
         twentyPctButton.isSelected = false
         sender.isSelected = true
         
-        let buttonTitle = sender.currentTitle!
-        let buttonTitleMinusPercentSign =  String(buttonTitle.dropLast())
-        print(buttonTitleMinusPercentSign)
-        let buttonTitleAsANumber = Double(buttonTitleMinusPercentSign)!
-        tip = buttonTitleAsANumber / 100
+        calculateBrain.calculateTip(sender: sender.currentTitle!)
         
         
         
@@ -36,29 +28,24 @@ class CalculatorViewController: UIViewController {
     @IBAction func stepperValueChanged(_ sender: UIStepper) {
         
         splitNumberLabel.text = String(format:"%.0f",sender.value)
-        numberOfPeople = Int(sender.value)
+        calculateBrain.numberOfPeople = Int(sender.value)
         
     }
     @IBAction func calculatePressed(_ sender: UIButton) {
         
         let bill = billTextField.text!
         if bill != "" {
-            billTotal = Double(bill)!
-            let result = billTotal * (1 + tip) / Double(numberOfPeople)
-            finalResult = String(format: "%.2f", result)
+            calculateBrain.calculateBill(bill: bill)
             performSegue(withIdentifier: "goToResults", sender: self)
         }
+    
         
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "goToResults" {
-            let destinationVc = segue.destination as! ResultsViewController
-            destinationVc.result = finalResult
-            destinationVc.tip = Int(tip*100)
-            destinationVc.split = numberOfPeople
-            
+            _ = calculateBrain.fillSegue(segue: segue)
         }
     }
 }
