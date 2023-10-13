@@ -1,4 +1,5 @@
 import UIKit
+import CoreLocation
 
 class WeatherViewController: UIViewController {
 
@@ -9,10 +10,16 @@ class WeatherViewController: UIViewController {
 
 
     var weatherManager = WeatherManager()
+    var locationManager = CLLocationManager()
+
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.requestLocation()
+
         searchTextField.delegate = self
         weatherManager.delegate = self
     }
@@ -20,6 +27,12 @@ class WeatherViewController: UIViewController {
     @IBAction func searchPressed(_ sender: UIButton) {
         searchTextField.endEditing(true)
     }
+
+
+    @IBAction func onPressedLocation(_ sender: UIButton) {
+        locationManager.requestLocation()
+    }
+
 
 }
 
@@ -33,6 +46,7 @@ extension WeatherViewController: WeatherManagerDelegate {
         DispatchQueue.main.async {
             self.temperatureLabel.text = weather.temperatureString
             self.conditionImageView.image = UIImage(systemName: weather.conditionName)
+            print(weather.cityName)
             self.cityLabel.text = weather.cityName
         }
 
@@ -69,6 +83,25 @@ extension WeatherViewController: UITextFieldDelegate {
         searchTextField.text = ""
     }
 
+}
+
+
+//MARK: - CLLocationManagerDelegate
+
+extension WeatherViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.last {
+            locationManager.stopUpdatingLocation()
+            let lat = location.coordinate.latitude
+            let lon = location.coordinate.longitude
+            weatherManager.fetcWeather(longitude: lon, latitude: lat)
+            
+        }
+    }
+
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error)
+    }
 }
 
 
