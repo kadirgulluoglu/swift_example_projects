@@ -1,21 +1,56 @@
-//
-//  ContentView.swift
-//  Dice App Swift Ui
-//
-//  Created by AyzaSoft on 6.01.2024.
-//
 
 import SwiftUI
 
 struct ContentView: View {
+
+    @State var leftNumber = 1
+    @State var rightNumber = 1
+
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundColor(.accentColor)
-            Text("Hello, world!")
+        ZStack {
+            Image("background")
+                .resizable()
+                .ignoresSafeArea()
+            VStack {
+                Image("diceeLogo")
+                Spacer()
+                HStack {
+                    Dice(leftNumber)
+                    Dice(rightNumber)
+                }
+                Spacer()
+                Button(action: {
+                    self.leftNumber = Int.random(in: 1...6)
+                    self.rightNumber = Int.random(in: 1...6)
+                }) {
+                    Text("ROLL")
+                        .font(.title)
+                        .fontWeight(.semibold)
+                        .foregroundColor(.white)
+                        .padding(.all)
+                }
+                    .background(.red)
+                    .cornerRadius(30)
+            }
         }
-        .padding()
+
+    }
+}
+
+
+
+struct Dice: View {
+    var n: Int
+    var body: some View {
+        Image("dice\(n)")
+            .resizable()
+            .aspectRatio(contentMode: .fit)
+            .padding(.all, 40)
+    }
+
+    init(_ n: Int) {
+        self.n = n
     }
 }
 
