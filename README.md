@@ -12,6 +12,11 @@ I'm learning swift currently
 
 <img src="https://github.com/kadirgulluoglu/swift_example_projects/blob/main/ScreenShots/clima.jpg" alt="clima" width="50%" height="50%">
 
+
+## Personal Card(Swift UI)
+
+<img src="https://github.com/kadirgulluoglu/swift_example_projects/blob/main/ScreenShots/personel%20card.jpg" alt="personalCard" width="50%" height="50%">
+
 ## BMI Calculator
 
 <img src="https://github.com/kadirgulluoglu/swift_example_projects/blob/main/ScreenShots/bmi.jpg" alt="BMI" width="50%" height="50%">
